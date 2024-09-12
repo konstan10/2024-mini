@@ -3,12 +3,13 @@ Response time - single-threaded
 """
 
 from machine import Pin
+import requests
 import time
 import random
 import json
 
 
-N: int = 3
+N: int = 10
 sample_ms = 10.0
 on_ms = 500
 
@@ -58,6 +59,10 @@ def scorer(t: list[int | None]) -> None:
     # and score (non-misses / total flashes) i.e. the score a floating point number
     # is in range [0..1]
     data = {}
+    data["minimum_response_time"] = min(t_good)
+    data["maximum_response_time"] = max(t_good)
+    data["average_response_time"] = sum(t_good) / len(t_good)
+    data["score"] = (len(t_good) / len(t))
 
     # %% make dynamic filename and write JSON
 
@@ -69,6 +74,10 @@ def scorer(t: list[int | None]) -> None:
     print("write", filename)
 
     write_json(filename, data)
+
+    firebase_url = "https://ec463-miniproj-konstantin-avi-default-rtdb.firebaseio.com/scores.json?auth=EgcPpopUwkPiy76IZ2K0mlVgH1XF3UpRJR72qjmG"
+    # full_url = firebase_url + filename
+    response = requests.post(firebase_url, json=data)
 
 
 if __name__ == "__main__":
