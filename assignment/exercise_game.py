@@ -4,6 +4,7 @@ Response time - single-threaded
 
 from machine import Pin
 import requests
+import network
 import time
 import random
 import json
@@ -59,10 +60,11 @@ def scorer(t: list[int | None]) -> None:
     # and score (non-misses / total flashes) i.e. the score a floating point number
     # is in range [0..1]
     data = {}
-    data["minimum_response_time"] = min(t_good)
-    data["maximum_response_time"] = max(t_good)
-    data["average_response_time"] = sum(t_good) / len(t_good)
-    data["score"] = (len(t_good) / len(t))
+    if len(t_good) > 0:
+        data["minimum_response_time"] = min(t_good)
+        data["maximum_response_time"] = max(t_good)
+        data["average_response_time"] = sum(t_good) / len(t_good)
+        data["score"] = (len(t_good) / len(t))
 
     # %% make dynamic filename and write JSON
 
@@ -76,8 +78,8 @@ def scorer(t: list[int | None]) -> None:
     write_json(filename, data)
 
     firebase_url = "https://ec463-miniproj-konstantin-avi-default-rtdb.firebaseio.com/scores.json?auth=EgcPpopUwkPiy76IZ2K0mlVgH1XF3UpRJR72qjmG"
-    # full_url = firebase_url + filename
-    response = requests.post(firebase_url, json=data)
+    requests.post(firebase_url, json=data)
+    print("saved successfully")
 
 
 if __name__ == "__main__":
@@ -85,6 +87,16 @@ if __name__ == "__main__":
 
     led = Pin("LED", Pin.OUT)
     button = Pin(16, Pin.IN, Pin.PULL_UP)
+
+    ssid = 'BU Guest (unencrypted)'
+    password = ''
+
+    # Connect to network
+    wlan = network.WLAN(network.STA_IF)
+    wlan.active(True)
+
+    # Connect to your network
+    wlan.connect(ssid, password)
 
     t: list[int | None] = []
 
