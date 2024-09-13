@@ -24,10 +24,10 @@ def playtone(frequency: float, duration: float) -> None:
 def quiet():
     speaker.duty_u16(0)
 
-
+# How fast to play the song
 freq: float = 30
 duration: float = 0.1  # seconds
-
+# Creating notes in order to play a song with well defined keys
 notes = [
     (494, 16),
     (988, 16),
