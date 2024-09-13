@@ -65,7 +65,12 @@ def scorer(t: list[int | None]) -> None:
         data["maximum_response_time"] = max(t_good)
         data["average_response_time"] = sum(t_good) / len(t_good)
         data["score"] = (len(t_good) / len(t))
-
+    else:
+        data["minimum_response_time"] = 0
+        data["maximum_response_time"] = 0
+        data["average_response_time"] = 0
+        data["score"] = 0
+        
     # %% make dynamic filename and write JSON
 
     now: tuple[int] = time.localtime()
