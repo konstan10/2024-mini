@@ -2,6 +2,8 @@ Exercise 1: What are the "max_bright" and "min_bright" values you found?
     max_bright = 320
     min_bright = 848
 
+Exercise 2: We decided to play a snippet of the main loading song from Pacman. We found sheet music as well as a way to translate individual notes into frequencies that the speaker can play. 
+
 Exercise 3: 
     data["minimum_response_time"] = min(t_good)
     data["maximum_response_time"] = max(t_good)
