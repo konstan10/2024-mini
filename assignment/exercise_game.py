@@ -9,6 +9,8 @@ import time
 import random
 import json
 
+FIREBASE_URL = "https://ec463-miniproj-konstantin-avi-default-rtdb.firebaseio.com/scores.json?auth=EgcPpopUwkPiy76IZ2K0mlVgH1XF3UpRJR72qjmG"
+RTC = machine.RTC()
 
 N: int = 10
 sample_ms = 10.0
@@ -70,31 +72,22 @@ def scorer(t: list[int | None]) -> None:
         data["maximum_response_time"] = 0
         data["average_response_time"] = 0
         data["score"] = 0
-        
-    # %% make dynamic filename and write JSON
 
-# Constant Firebase URL
-FIREBASE_URL = "https://ec463-miniproj-konstantin-avi-default-rtdb.firebaseio.com/scores.json?auth=EgcPpopUwkPiy76IZ2K0mlVgH1XF3UpRJR72qjmG"
+    # Get date and time as a string
+    now = RTC.datetime()
+    now_str ="%04d-%02d-%02d %02d:%02d:%02d"%(now[0:3] + now[4:7])
 
-# Get time and format as needed
-now = time.localtime()
-now_str = time.strftime("%Y-%m-%dT%H_%M_%S", now)
+    # Write data to JSON
+    filename = f"score-{now_str}.json"
+    print("Writing", filename)
+    write_json(filename, data)
 
-# Create the filename
-filename = f"score-{now_str}.json"
-
-# Write data to JSON file
-print("write", filename)
-write_json(filename, data)
-
-# Send data to Firebase
-response = requests.post(FIREBASE_URL, json=data)
-
-# Check response status
-if response.status_code == 200:
-    print("Saved successfully")
-else:
-    print(f"Failed to save: {response.status_code}, {response.text}")
+    # Send data to Firebase
+    response = requests.post(FIREBASE_URL, json=data)
+    if response.status_code == 200:
+        print("Saved successfully")
+    else:
+        print(f"Failed to save: {response.status_code}, {response.text}")
 
 
 if __name__ == "__main__":
