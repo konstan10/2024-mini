@@ -28,39 +28,37 @@ def quiet():
 freq: float = 30
 duration: float = 0.1  # seconds
 # Creating notes in order to play a song with well defined keys
-notes = [
-    (494, 16),
-    (988, 16),
-    (740, 16),
-    (622, 16),
-    (988, 32),
-    (740, -16),
-    (622, 8),
-    (523, 16),
-    (1047, 16),
-    (1568, 16),
-    (1319, 16),
-    (1047, 32),
-    (1568, -16),
-    (1319, 8),
-    (494, 16),
-    (988, 16),
-    (740, 16),
-    (622, 16),
-    (988, 32),
-    (740, -16),
-    (622, 8),
-    (622, 32),
-    (659, 32),
-    (698, 32),
-    (698, 32),
-    (740, 32),
-    (784, 32),
-    (784, 32),
-    (740, 32),
-    (880, 16),
-    (988, 8)
-]
+ (494, 16),  # B4, sixteenth note
+    (988, 16),  # B5, sixteenth note
+    (740, 16),  # F#5, sixteenth note
+    (622, 16),  # D#5, sixteenth note
+    (988, 32),  # B5, thirty-second note
+    (740, -16), # F#5, staccato sixteenth note (short and detached)
+    (622, 8),   # D#5, eighth note
+    (523, 16),  # C5, sixteenth note
+    (1047, 16), # C6, sixteenth note
+    (1568, 16), # G6, sixteenth note
+    (1319, 16), # E6, sixteenth note
+    (1047, 32), # C6, thirty-second note
+    (1568, -16),# G6, staccato sixteenth note (short and detached)
+    (1319, 8),  # E6, eighth note
+    (494, 16),  # B4, sixteenth note
+    (988, 16),  # B5, sixteenth note
+    (740, 16),  # F#5, sixteenth note
+    (622, 16),  # D#5, sixteenth note
+    (988, 32),  # B5, thirty-second note
+    (740, -16), # F#5, staccato sixteenth note (short and detached)
+    (622, 8),   # D#5, eighth note
+    (622, 32),  # D#5, thirty-second note
+    (659, 32),  # E5, thirty-second note
+    (698, 32),  # F5, thirty-second note
+    (698, 32),  # F5, thirty-second note
+    (740, 32),  # F#5, thirty-second note
+    (784, 32),  # G5, thirty-second note
+    (784, 32),  # G5, thirty-second note
+    (740, 32),  # F#5, thirty-second note
+    (880, 16),  # A5, sixteenth note
+    (988, 8)    # B5, eighth note
 
 
 print("Playing frequency (Hz):")
