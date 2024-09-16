@@ -9,3 +9,4 @@ Exercise 3:
     data["maximum_response_time"] = max(t_good)
     data["average_response_time"] = sum(t_good) / len(t_good)
     data["score"] = (len(t_good) / len(t))
+After 10 clicks our program will send a POST request to firebase, this will upload the response time data to the firebase database. This is only made possible through the connection of the Pico W to the internet at the start of the game.
