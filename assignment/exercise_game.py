@@ -73,18 +73,28 @@ def scorer(t: list[int | None]) -> None:
         
     # %% make dynamic filename and write JSON
 
-    now: tuple[int] = time.localtime()
+# Constant Firebase URL
+FIREBASE_URL = "https://ec463-miniproj-konstantin-avi-default-rtdb.firebaseio.com/scores.json?auth=EgcPpopUwkPiy76IZ2K0mlVgH1XF3UpRJR72qjmG"
 
-    now_str = "-".join(map(str, now[:3])) + "T" + "_".join(map(str, now[3:6]))
-    filename = f"score-{now_str}.json"
+# Get time and format as needed
+now = time.localtime()
+now_str = time.strftime("%Y-%m-%dT%H_%M_%S", now)
 
-    print("write", filename)
+# Create the filename
+filename = f"score-{now_str}.json"
 
-    write_json(filename, data)
+# Write data to JSON file
+print("write", filename)
+write_json(filename, data)
 
-    firebase_url = "https://ec463-miniproj-konstantin-avi-default-rtdb.firebaseio.com/scores.json?auth=EgcPpopUwkPiy76IZ2K0mlVgH1XF3UpRJR72qjmG"
-    requests.post(firebase_url, json=data)
-    print("saved successfully")
+# Send data to Firebase
+response = requests.post(FIREBASE_URL, json=data)
+
+# Check response status
+if response.status_code == 200:
+    print("Saved successfully")
+else:
+    print(f"Failed to save: {response.status_code}, {response.text}")
 
 
 if __name__ == "__main__":
